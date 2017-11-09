@@ -38,7 +38,7 @@ for(var i = slideElements.length - 1; i >= 0; i--) {
   fragments.forEach(function(fragment) {
     lifeLineLength = Math.max(
       lifeLineLength,
-      parseInt(fragment.dataset.enter || 1),
+      parseInt(fragment.dataset.enter || 0) + 1,
       parseInt(fragment.dataset.exit || 0) + 1
     )
   })
