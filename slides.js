@@ -12,7 +12,7 @@ Slide.prototype.hide = function() {
 
 Slide.prototype.show = function() {
   this.elements.forEach(function(element) {
-    element.style.display = 'block'
+    element.style.removeProperty('display')
   })
 }
 
@@ -39,13 +39,13 @@ for(var i = slideElements.length - 1; i >= 0; i--) {
     lifeLineLength = Math.max(
       lifeLineLength,
       parseInt(fragment.dataset.enter || 1),
-      parseInt(fragment.dataset.exit || 1)
+      parseInt(fragment.dataset.exit || 0) + 1
     )
   })
 
   var lifeLine = []
-  for(var i = 0; i < lifeLineLength; i++) {
-    lifeLine[i] = [slideElement]
+  for(var j = 0; j < lifeLineLength; j++) {
+    lifeLine[j] = [slideElement]
   }
 
   fragments.forEach(function(fragment) {
@@ -57,8 +57,8 @@ for(var i = slideElements.length - 1; i >= 0; i--) {
     }
   })
 
-  for(var i = lifeLine.length - 1; i >= 0; i--) {
-    var slide = new Slide(lifeLine[i])
+  for(var j = lifeLine.length - 1; j >= 0; j--) {
+    var slide = new Slide(lifeLine[j])
     if(currentSlide) {
       slide.next = currentSlide
       currentSlide.prev = slide
@@ -83,7 +83,7 @@ function previous() {
   }
 }
 
-next()
+currentSlide.show()
 
 document.addEventListener('keydown', function(event) {
   switch(event.keyCode) {
