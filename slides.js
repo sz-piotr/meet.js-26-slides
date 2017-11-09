@@ -1,48 +1,89 @@
+function Slide(elements) {
+  this.elements = elements || []
+  this.prev = null
+  this.next = null
+}
+
+Slide.prototype.hide = function() {
+  this.elements.forEach(function(element) {
+    element.style.display = 'none'
+  })
+}
+
+Slide.prototype.show = function() {
+  this.elements.forEach(function(element) {
+    element.style.display = 'block'
+  })
+}
+
 var trim = document.querySelectorAll('pre[data-trim] code')
 for(var i = 0; i < trim.length; i++) {
-  var element = trim[i]
-  var html = element.innerHTML.split('\n')
+  var slideElement = trim[i]
+  var html = slideElement.innerHTML.split('\n')
   var indentSize = html[1].match(/^\s*/)[0].length
-  element.innerHTML = html.slice(1, html.length - 1)
+  slideElement.innerHTML = html.slice(1, html.length - 1)
     .map(string => string.substring(indentSize))
     .join('\n')
 }
 
-var slides = document.querySelectorAll('section')
-for(var i = 0; i < slides.length; i++) {
-  var slide = slides[i]
-  slide.style.display = 'none'
-}
+var currentSlide
 
-var currentIndex = 0
-var currentSlide = slides[0]
-currentSlide.style.display = 'block'
+var slideElements = document.querySelectorAll('section')
+for(var i = slideElements.length - 1; i >= 0; i--) {
+  var slideElement = slideElements[i]
+  slideElement.style.display = 'none'
 
-function next() {
-  currentIndex++
-  if(currentIndex >= slides.length) {
-    currentIndex = slides.length - 1
-    return
+  var fragments = slideElement.querySelectorAll('[data-enter], [data-exit]')
+  var lifeLineLength = 1
+  fragments.forEach(function(fragment) {
+    lifeLineLength = Math.max(
+      lifeLineLength,
+      parseInt(fragment.dataset.enter || 1),
+      parseInt(fragment.dataset.exit || 1)
+    )
+  })
+
+  var lifeLine = []
+  for(var i = 0; i < lifeLineLength; i++) {
+    lifeLine[i] = [slideElement]
   }
 
-  var previousSlide = currentSlide
-  currentSlide = slides[currentIndex]
-  previousSlide.style.display = 'none'
-  currentSlide.style.display = 'block'
+  fragments.forEach(function(fragment) {
+    fragment.style.display = 'none'
+    var enterAt = parseInt(fragment.dataset.enter || 0)
+    var exitAt = parseInt(fragment.dataset.exit || lifeLineLength)
+    for(var i = enterAt; i < exitAt; i++) {
+      lifeLine[i].push(fragment)
+    }
+  })
+
+  for(var i = lifeLine.length - 1; i >= 0; i--) {
+    var slide = new Slide(lifeLine[i])
+    if(currentSlide) {
+      slide.next = currentSlide
+      currentSlide.prev = slide
+    }
+    currentSlide = slide
+  }
+}
+
+function next() {
+  if(currentSlide.next) {
+    currentSlide.hide()
+    currentSlide = currentSlide.next
+    currentSlide.show()
+  }
 }
 
 function previous() {
-  currentIndex--
-  if(currentIndex < 0) {
-    currentIndex = 0
-    return
+  if(currentSlide.prev) {
+    currentSlide.hide()
+    currentSlide = currentSlide.prev
+    currentSlide.show()
   }
-
-  var previousSlide = currentSlide
-  currentSlide = slides[currentIndex]
-  previousSlide.style.display = 'none'
-  currentSlide.style.display = 'block'
 }
+
+next()
 
 document.addEventListener('keydown', function(event) {
   switch(event.keyCode) {
