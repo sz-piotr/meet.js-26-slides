@@ -4,403 +4,404 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="normalize.css">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/theme.css">
 
   <title>Document</title>
 </head>
 <body>
 
 <section>
-  <div class="left full">
-      W kółko to samo, czyli o iteracji słów kilka <br>
-      Piotr Szlachciak
+  <div class="dark full">
+    W kółko to samo, czyli o iteracji słów kilka <br>
+    Piotr Szlachciak
   </div>
 </section>
 
 <section>
-  <div class="left full">
-    <pre data-trim><code>
-      let myArray = [1, 2, 3, 4, 5]
-      for (let i = 0; i < myArray.length; i++) {
-        doSomething(myArray[i])
-      }
-    </code></pre>
-  </div>
-</section>
-
-<section>
-  <div class="left full">
-    <pre data-trim><code>
-      int myArray[] = { 1, 2, 3, 4, 5 };
-      int length = sizeof(myArray) / sizeof(int);
-
-      for(int i = 0; i < length; i++) {
-        doSomething(myArray[i]);
-      }
+  <div class="dark full">
+    <pre data-trim><code class="language-javascript">
+let myArray = [1, 2, 3, 4, 5]
+for (let i = 0; i < myArray.length; i++) {
+  doSomething(myArray[i])
+}
     </code></pre>
   </div>
 </section>
 
 <section>
-  <div class="left full" data-exit=2>
-    <pre data-trim data-exit=1><code>
-      let myArray = [1, 2, 3, 4, 5]
-      for (let i = 0; i < myArray.length; i++) {
-        doSomething(myArray[i])
-      }
-    </code></pre>
-    <pre data-trim data-enter=1 data-exit=2><code>
-      let myArray = [1, 2, 3, 4, 5]
+  <div class="dark full">
+    <pre data-trim><code class="language-javascript">
+int myArray[] = { 1, 2, 3, 4, 5 };
+int length = sizeof(myArray) / sizeof(int);
 
-      // manage iteration
-      for (let i = 0; i < myArray.length; i++) {
-
-        // perform action
-        doSomething(myArray[i])
-      }
-    </code></pre>
-  </div>
-  <div class="left" data-enter=2>
-    <pre data-trim><code>
-      let myArray = [1, 2, 3, 4, 5]
-
-      // manage iteration
-      for (let i = 0; i < myArray.length; i++) {
-
-        // perform action
-        doSomething(myArray[i])
-      }
-    </code></pre>
-  </div>
-
-
-  <div class="right" data-enter=2>
-    <pre data-trim data-exit=4><code>
-      // manage iteration
-      function forEach (array, action) {
-        for (let i = 0; i < array.length; i++) {
-          action(array[i])
-        }
-      }
-    </code></pre>
-    <pre data-trim data-enter=3 data-exit=4><code>
-      <br>
-      let myArray = [1, 2, 3, 4, 5]
-
-      // perform action
-      forEach(myArray, doSomething)
-    </code></pre>
-    <pre data-trim data-enter=4><code>
-      let myArray = [1, 2, 3, 4, 5]
-
-      // perform action
-      myArray.forEach(doSomething)
+for (int i = 0; i < length; i++) {
+  doSomething(myArray[i]);
+}
     </code></pre>
   </div>
 </section>
 
 <section>
-  <div class="left full" data-exit=1>
-    <pre data-trim><code>
-      function fibonacci (n) {
-        if (n == 0 || n == 1) {
-          return n
-        }
-        return fibonacci(n - 1) + fibonacci(n - 2)
-      }
+  <div class="dark full" data-exit=2>
+    <pre data-trim data-exit=1><code class="language-javascript">
+let myArray = [1, 2, 3, 4, 5]
+for (let i = 0; i < myArray.length; i++) {
+  doSomething(myArray[i])
+}
+    </code></pre>
+    <pre data-trim data-enter=1 data-exit=2><code class="language-javascript">
+let myArray = [1, 2, 3, 4, 5]
+
+// manage iteration
+for (let i = 0; i < myArray.length; i++) {
+
+  // perform action
+  doSomething(myArray[i])
+}
     </code></pre>
   </div>
-  <div class="left" data-enter=1>
-    <pre data-trim><code>
-      function fibonacci (n) {
-        if (n == 0 || n == 1) {
-          return n
-        }
-        return fibonacci(n - 1) + fibonacci(n - 2)
-      }
+  <div class="dark" data-enter=2>
+    <pre data-trim><code class="language-javascript">
+let myArray = [1, 2, 3, 4, 5]
+
+// manage iteration
+for (let i = 0; i < myArray.length; i++) {
+
+  // perform action
+  doSomething(myArray[i])
+}
     </code></pre>
   </div>
 
-  <div class="right" data-enter=1>
-    <pre data-trim data-exit=2><code>
-      function forEach (array, action) {
-        if(array.length > 0) {
-          action(array[0])
-          forEach(array.slice(1), action)
-        }
-      }
+  <div class="light" data-enter=2>
+    <pre data-trim data-exit=4><code class="language-javascript">
+// manage iteration
+function forEach (array, action) {
+  for (let i = 0; i < array.length; i++) {
+    action(array[i])
+  }
+}
     </code></pre>
-    <pre data-trim data-enter=2><code>
-      function forEach ([first, ...rest], action) {
-        if (first !== undefined) {
-          action(first)
-          forEach(rest, action)
-        }
-      }
+    <pre data-trim data-enter=3 data-exit=4><code class="language-javascript">
+
+let myArray = [1, 2, 3, 4, 5]
+
+// perform action
+forEach(myArray, doSomething)
+    </code></pre>
+    <pre data-trim data-enter=4><code class="language-javascript">
+let myArray = [1, 2, 3, 4, 5]
+
+// perform action
+myArray.forEach(doSomething)
     </code></pre>
   </div>
 </section>
 
 <section>
-  <div class="left full" data-exit=1>
-    <pre data-trim><code>
-      let myArray = [1, 2, 3, 4, 5]
-      for (let i = 0; i < myArray.length; i++) {
-        myArray[i] = myArray[i] * 5
-      }
+  <div class="dark full" data-exit=1>
+    <pre data-trim><code class="language-javascript">
+function fibonacci (n) {
+  if (n == 0 || n == 1) {
+    return n
+  }
+  return fibonacci(n - 1) + fibonacci(n - 2)
+}
     </code></pre>
   </div>
-  <div class="left" data-enter=1>
-    <pre data-trim><code>
-      let myArray = [1, 2, 3, 4, 5]
-      for (let i = 0; i < myArray.length; i++) {
-        myArray[i] = myArray[i] * 5
-      }
+  <div class="dark" data-enter=1>
+    <pre data-trim><code class="language-javascript">
+function fibonacci (n) {
+  if (n == 0 || n == 1) {
+    return n
+  }
+  return fibonacci(n - 1) + fibonacci(n - 2)
+}
     </code></pre>
   </div>
 
-  <div class="right" data-enter=1>
-    <pre data-trim><code>
-      let myArray = [1, 2, 3, 4, 5]
-      myArray = myArray.map(x => x * 5)
+  <div class="light" data-enter=1>
+    <pre data-trim data-exit=2><code class="language-javascript">
+function forEach (array, action) {
+  if (array.length > 0) {
+    action(array[0])
+    forEach(array.slice(1), action)
+  }
+}
+    </code></pre>
+    <pre data-trim data-enter=2><code class="language-javascript">
+function forEach ([first, ...rest], action) {
+  if (first !== undefined) {
+    action(first)
+    forEach(rest, action)
+  }
+}
     </code></pre>
   </div>
 </section>
 
 <section>
-  <div class="left-header">
+  <div class="dark full" data-exit=1>
+    <pre data-trim><code class="language-javascript">
+let myArray = [1, 2, 3, 4, 5]
+for (let i = 0; i < myArray.length; i++) {
+  myArray[i] = myArray[i] * 5
+}
+    </code></pre>
+  </div>
+  <div class="dark" data-enter=1>
+    <pre data-trim><code class="language-javascript">
+let myArray = [1, 2, 3, 4, 5]
+for (let i = 0; i < myArray.length; i++) {
+  myArray[i] = myArray[i] * 5
+}
+    </code></pre>
+  </div>
+
+  <div class="light" data-enter=1>
+    <pre data-trim><code class="language-javascript">
+let myArray = [1, 2, 3, 4, 5]
+myArray = myArray.map(x => x * 5)
+    </code></pre>
+  </div>
+</section>
+
+<section>
+  <div class="dark-header">
     <img src="lodash_logo.png">
   </div>
 
-  <div class="right-header">
+  <div class="light-header">
     <img src="ramda_logo.png">
   </div>
 
-  <div class="left">
-    <pre data-trim data-enter=1><code>
-      let myArray = [1, 2, 3, 4, 5]
-      myArray = _.map(myArray, x => x * 5)
-      _.forEach(myArray, doSomething)
+  <div class="dark">
+    <pre data-trim data-enter=1><code class="language-javascript">
+let myArray = [1, 2, 3, 4, 5]
+myArray = _.map(myArray, x => x * 5)
+_.forEach(myArray, doSomething)
     </code></pre>
   </div>
 
-  <div class="right">
-    <pre data-trim data-enter=2><code>
-      const multiplyBy5AndDoSomething = R.compose(
-        R.forEach(doSomething),
-        R.map(x => x * 5)
-      )
+  <div class="light">
+    <pre data-trim data-enter=2><code class="language-javascript">
+const composed = R.compose(
+  R.forEach(doSomething),
+  R.map(x => x * 5)
+)
 
-      let myArray = [1, 2, 3, 4, 5]
-      multiplyBy5AndDoSomething(myArray)
+let myArray = [1, 2, 3, 4, 5]
+composed(myArray)
     </code></pre>
   </div>
 </section>
 
 <section>
-  <div class="left full">
+  <div class="dark full">
     "Oprócz wszystkiego, twórcy JavaScript dodali również generatory.
     Raczej niepotrzebnie, bo nie widzę dla nich żadnego zastosowania"
   </div>
 </section>
 
 <section>
-  <div class="left full" data-exit=1>
-    <pre data-trim><code>
-      let myArray = [1, 2, 3, 4, 5]
-      for (let i = 0; i < myArray.length; i++) {
-        doSomething(myArray[i])
-      }
+  <div class="dark full" data-exit=1>
+    <pre data-trim><code class="language-javascript">
+let myArray = [1, 2, 3, 4, 5]
+for (let i = 0; i < myArray.length; i++) {
+  doSomething(myArray[i])
+}
     </code></pre>
   </div>
-  <div class="left" data-enter=1>
-    <pre data-trim><code>
-      let myArray = [1, 2, 3, 4, 5]
-      for (let i = 0; i < myArray.length; i++) {
-        doSomething(myArray[i])
-      }
-    </code></pre>
-  </div>
-
-  <div class="right" data-enter=1>
-    <pre data-trim><code>
-      let myArray = [1, 2, 3, 4, 5]
-      for (let item of myArray) {
-        doSomething(item)
-      }
-    </code></pre>
-  </div>
-</section>
-
-<section>
-  <div class="left">
-    <pre data-trim><code>
-      let a = [1, 2, 3]
-
-      let iterator = a[Symbol.iterator]()
-      iterator.next() // {value: 1, done: false}
-      iterator.next() // {value: 2, done: false}
-      iterator.next() // {value: 3, done: false}
-      iterator.next() // {value: undefined, done: true}
+  <div class="dark" data-enter=1>
+    <pre data-trim><code class="language-javascript">
+let myArray = [1, 2, 3, 4, 5]
+for (let i = 0; i < myArray.length; i++) {
+  doSomething(myArray[i])
+}
     </code></pre>
   </div>
 
-  <div class="right">
-    <pre data-trim data-enter=1><code>
-      function * generate123 () {
-        yield 1
-        yield 2
-        yield 3
-      }
-
-      let iterator = generate123()
-      iterator.next() // {value: 1, done: false}
-      iterator.next() // {value: 2, done: false}
-      iterator.next() // {value: 3, done: false}
-      iterator.next() // {value: undefined, done: true}
+  <div class="light" data-enter=1>
+    <pre data-trim><code class="language-javascript">
+let myArray = [1, 2, 3, 4, 5]
+for (let item of myArray) {
+  doSomething(item)
+}
     </code></pre>
   </div>
 </section>
 
 <section>
-  <div class="left">
-    <pre data-trim><code>
-      function * range (limit) {
-        for (let i = 0; i < limit; i++) {
-          yield i
-        }
-      }
+  <div class="dark">
+    <pre data-trim><code class="language-javascript">
+let a = [1, 2, 3]
+
+let iterator = a[Symbol.iterator]()
+iterator.next() // {value: 1, done: false}
+iterator.next() // {value: 2, done: false}
+iterator.next() // {value: 3, done: false}
+iterator.next() // {value: undefined, done: true}
     </code></pre>
-    <pre data-trim data-enter=1 data-exit=2><code>
-      for (let i of range(3)) {
-        console.log(i) // prints: 0, 1, 2
-      }
-    </code></pre>
-    <pre data-trim data-enter=2><code>
-      for (let i of range(Infinity)) {
-        console.log(i) // prints: 0, 1, 2, 3, 4, ...
-      }
+  </div>
+
+  <div class="light">
+    <pre data-trim data-enter=1><code class="language-javascript">
+function * generate123 () {
+  yield 1
+  yield 2
+  yield 3
+}
+
+let iterator = generate123()
+iterator.next() // {value: 1, done: false}
+iterator.next() // {value: 2, done: false}
+iterator.next() // {value: 3, done: false}
+iterator.next() // {value: undefined, done: true}
     </code></pre>
   </div>
 </section>
 
 <section>
-  <div class="left">
-    <pre data-trim><code>
-      function * map (iterable, fn) {
-        for (let item of iterable) {
-          yield fn(item)
-        }
-      }
+  <div class="dark">
+    <pre data-trim><code class="language-javascript">
+function * range (limit) {
+  for (let i = 0; i < limit; i++) {
+    yield i
+  }
+}
+    </code></pre>
+    <pre data-trim data-enter=1 data-exit=2><code class="language-javascript">
+for (let i of range(3)) {
+  console.log(i) // prints: 0, 1, 2
+}
+    </code></pre>
+    <pre data-trim data-enter=2><code class="language-javascript">
+for (let i of range(Infinity)) {
+  console.log(i) // prints: 0, 1, 2, 3, 4, ...
+}
     </code></pre>
   </div>
 </section>
 
 <section>
-  <div class="left">
-    <pre data-trim><code>
-      function getPowers (count) {
-        let powers = []
-        for (let i = 0; i < count; i++) {
-          powers.push(2 ** i)
-        }
-        return powers
-      }
-    </code></pre>
-  </div>
-  <div class="right">
-    <pre data-trim data-enter=1><code>
-      const powersIterator = map(range(Infinity), x => 2 ** x)
-      for (let power of powersIterator) {
-        console.log(power) // prints: 1, 2, 4, 8, 16, ...
-      }
+  <div class="dark">
+    <pre data-trim><code class="language-javascript">
+function * map (iterable, fn) {
+  for (let item of iterable) {
+    yield fn(item)
+  }
+}
     </code></pre>
   </div>
 </section>
 
 <section>
-  <div class="left">
-    <pre data-trim><code>
-      function * range (limit) {
-        for (let i = 0; i < limit; i++) {
-          yield i
-        }
-      }
+  <div class="dark">
+    <pre data-trim><code class="language-javascript">
+function getPowers (count) {
+  let powers = []
+  for (let i = 0; i < count; i++) {
+    powers.push(2 ** i)
+  }
+  return powers
+}
     </code></pre>
   </div>
-  <div class="right">
-    <pre data-trim data-enter=1><code>
-      let rangeIterator = range(3)
-
-      for (let i of rangeIterator) {
-        console.log(i) // prints: 0, 1, 2
-      }
-
-      for (let i of rangeIterator) {
-        console.log(i) // never executed
-      }
+  <div class="light">
+    <pre data-trim data-enter=1><code class="language-javascript">
+const powersIterator = map(range(Infinity), x => 2 ** x)
+for (let power of powersIterator) {
+  console.log(power) // prints: 1, 2, 4, 8, 16, ...
+}
     </code></pre>
   </div>
 </section>
 
 <section>
-  <div class="left">
-    <pre data-trim data-exit=2><code>
-      function range (limit) {
-        let iterable = {}
-        iterable[Symbol.iterator] = function * () {
-          for (let i = 0; i < limit; i++) {
-            yield i
-          }
-        }
-        return iterable
-      }
-    </code></pre>
-    <pre data-trim data-enter=2><code>
-      function range (limit) {
-        return {
-          *[Symbol.iterator] () {
-            for (let i = 0; i < limit; i++) {
-              yield i
-            }
-          }
-        }
-      }
+  <div class="dark">
+    <pre data-trim><code class="language-javascript">
+function * range (limit) {
+  for (let i = 0; i < limit; i++) {
+    yield i
+  }
+}
     </code></pre>
   </div>
-  <div class="right">
-    <pre data-trim data-enter=1><code>
-      let rangeIterator = range(3)
+  <div class="light">
+    <pre data-trim data-enter=1><code class="language-javascript">
+let rangeIterator = range(3)
 
-      for (let i of rangeIterator) {
-        console.log(i) // prints: 0, 1, 2
-      }
+for (let i of rangeIterator) {
+  console.log(i) // prints: 0, 1, 2
+}
 
-      for (let i of rangeIterator) {
-        console.log(i) // prints: 0, 1, 2
-      }
+for (let i of rangeIterator) {
+  console.log(i) // never executed
+}
     </code></pre>
   </div>
 </section>
 
 <section>
-  <div class="left">
-    <pre data-trim><code>
-      import { range } from 'iterable-sequence'
-
-      let powers = range(Infinity).map(x => 2 ** x)
-
-      for (let power of powers.take(5)) {
-        console.log(power) // prints: 1, 2, 4, 8, 16
+  <div class="dark">
+    <pre data-trim data-exit=2><code class="language-javascript">
+function range (limit) {
+  let iterable = {}
+  iterable[Symbol.iterator] = function * () {
+    for (let i = 0; i < limit; i++) {
+      yield i
+    }
+  }
+  return iterable
+}
+    </code></pre>
+    <pre data-trim data-enter=2><code class="language-javascript">
+function range (limit) {
+  return {
+    *[Symbol.iterator] () {
+      for (let i = 0; i < limit; i++) {
+        yield i
       }
+    }
+  }
+}
+    </code></pre>
+  </div>
+  <div class="light">
+    <pre data-trim data-enter=1><code class="language-javascript">
+let rangeIterator = range(3)
+
+for (let i of rangeIterator) {
+  console.log(i) // prints: 0, 1, 2
+}
+
+for (let i of rangeIterator) {
+  console.log(i) // prints: 0, 1, 2
+}
+    </code></pre>
+  </div>
+</section>
+
+<section>
+  <div class="dark">
+    <pre data-trim><code class="language-javascript">
+import { range } from 'iterable-sequence'
+
+let powers = range(Infinity).map(x => 2 ** x)
+
+for (let power of powers.take(5)) {
+  console.log(power) // prints: 1, 2, 4, 8, 16
+}
     </code></pre>
   </div>
 </section>
 
 <section>Dziękuję za uwagę</section>
 
-<script src="slides.js"></script>
+<script src="js/prism.js"></script>
+<script src="js/slides.js"></script>
 
 </body>
 </html>
