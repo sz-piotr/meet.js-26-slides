@@ -1,118 +1,87 @@
-Chyba wszyscy kiedyś napisali kod taki jak ten:
+=== 0 ===
 
-let myArray = [1, 2, 3, 4, 5]
-for (let i = 0; i < myArray.length; i++) {
-  doSomething(myArray[i])
-}
+Cześć, nazywam się Piotr Szlachciak i dzisiaj przedstawię prezentację zatutułowaną "W kółko to samo, czyli o iteracji słów kilka".
 
-Dzisiaj chciałbym was przekonać, że jest to przykład źle napisanego kodu. Ale żeby zrozumieć dlaczego nie warto tak pisać, należy najpierw spojrzeć na to skąd wziął się taki sposób.
+=== 1 ===
+
+Chyba każdy z nas kiedyś napisał kod podobny do tego.
+
+Dzisiaj chciałbym was przekonać, że jest to przykład źle napisanego kodu.
+
+Ale żeby zrozumieć dlaczego nie warto tak pisać, należy najpierw spojrzeć na to skąd wzięła się taka konstrukcja jak pętla for.
+
+=== 2 ===
 
 Początków takiej postaci pętli for należy doszukiwać się w języku C, którego składnia leży u podstawy JavaScriptu.
 
-int myArray[] = { 1, 2, 3, 4, 5 };
-for(int i = 0; i < sizeof(myArray) / sizeof(int); i++) {
-  doSomething(myArray[i]);
-}
+Założeniem języka C było udostępnienie dostępu programiście do niskopoziomowego programowania z zachowaniem wysokopoziomowej składni. Efektem tego jest prosta możliwość przełożenia instrukcji języka C na asembler.
 
-Założeniem C było udostępnienie dostępu programiście do niskopoziomowego programowania z zachowaniem wysokopoziomowej składni. Efektem tego jest prosta możliwość przełożenia instrukcji języka C na asembler.
+Jednak JavaScript operuje na znacznie wyższym poziomie abstrakcji niż C. Sama natura języka nie pozwala nam dokonywać optymalizacji na poziomie pojedynczych instrukcji procesora. Zanim program napisany w JavaScript zostanie wykonany musi zostać sparsowany, a w trakcie jego wykonania cyklicznie następuje wywołanie Garbage Collectora, który zwalnia programistę z zarządzania pamięcią.
 
-Jednak JavaScript jest znacznie bardziej wysokopoziomowym językiem niż C. Sama natura języka nie pozwala nam dokonywać optymalizacji na poziomie pojedynczych instrukcji procesora. Zanim kod JavaScriptowy zostanie wykonany musi zostać sparsowany, a w trakcie jego wykonania cyklicznie następuje wywołanie Garbage Collectora.
+Te cechy języka kosztem mniejszej wydajności zapewniają nam możliwość wyrażenia swoich intencji w prostszy i bardziej czytelny sposób.
 
-Te cechy języka kosztem mniejszej wydajności zapewniają nam możliwość wyrażenia swoich intencji w prosty i czytelny sposób.
+=== 3 ===
 
 Wróćmy więc do naszego początkowego przykładu.
 
-let myArray = [1, 2, 3, 4, 5]
-for (let i = 0; i < myArray.length; i++) {
-  doSomething(myArray[i])
-}
+Podstawowym problemem tego kodu jest to że powinien robić jedną rzecz, a robi dwie.
 
-Podstawowym problemem tego kodu jest to że powinien robić jedną rzecz, ale robi dwie. Powinien zrobić coś z każdym elementem tablicy, ale jednocześnie zajmuje się kontrolowaniem pętli. Aby ten problem naprawić możemy zrobić refactoring i wydzielić kontrolowanie pętli do osobnej funkcji.
+=== 4 ===
 
-function forEach (array, action) {
-  for (let i = 0; i < array.length; i++) {
-    action(array[i])
-  }
-}
+Poza wywołaniem funckji dla każdego elementu tablicy równocześnie zajmuje się kontrolą pętli. Aby ten problem naprawić możemy zrobić refactoring i wydzielić kontrolowanie pętli do osobnej funkcji.
+
+=== 5 ===
 
 A następnie użyć jej do osiągnięcia naszego pierwotnego celu:
+
+=== 6 ===
 
 let myArray = [1, 2, 3, 4, 5]
 forEach(myArray, doSomething)
 
 W większości zastosowań nie ma jednak sensu duplikować istniejącej funkcjonalności. Możemy użyć wbudowanej metody forEach obiektów typu Array.
 
-let myArray = [1, 2, 3, 4, 5]
-myArray.forEach(doSomething)
+=== 7 ===
 
-Zauważmy, że w obu powyższych przypadkach przekazaliśmy funkcję jako argument. Jest to możliwe ponieważ JavaScript traktuje funkcje tak jak inne obiekty. Dzięki temu otwiera nam drogę do programowania w innym niż imperatywny paradygmacie. JavaScript pozwala nam pisać funkcyjny kod.
+Zauważmy, że w tym rozwiązaniu przekazaliśmy funkcję jako argument. Jest to możliwe ponieważ JavaScript traktuje funkcje tak jak inne obiekty. Dzięki temu otwiera nam drogę do programowania w paradygmacie innym niż imperatywny. JavaScript pozwala nam pisać funkcyjny kod.
 
 Dzięki podejściu funkcyjnemu możemy tworzyć pętle bez użycia słowa kluczowego for. Żeby zrozumieć jak to się dzieje musimy zrozumieć zjawisko rekurencji.
 
-function fibonacci (n) {
-  if (n == 0 || n == 1) {
-    return n
-  }
-  return fibonacci(n - 1) + fibonacci(n - 2)
-}
+=== 8 ===
 
 Ten klasyczny przykład pokazuje obliczanie kolejnych elementów ciągu Fibonacciego poprzez wywoływanie przez funkcję samej siebie z innymi argumentami. Nie skupiając się na problemach tej implementacji, przejdźmy do wykorzystania rekurencji do iteracji.
 
-function forEach (array, action) {
-  if(array.length > 0) {
-    action(array[0])
-    forEach(array.slice(1), action) // without the first element
-  }
-}
+=== 9 ===
 
-Wykorzystując destrukturyzację z ES2015 możemy to zapisać znacznie prościej:
+Wykorzystując destrukturyzację z ES2015 możemy to zapisać znacznie prościej.
 
-function forEach ([first, ...rest], action) {
-  if (first !== undefined) {
-    action(first)
-    forEach(rest, action)
-  }
-}
+=== 10 ===
 
 Zauważmy że wszystkie przedstawione implementacje forEach nie zakładają niczego o danych zawartych w tablicy ani o operacji którą chcemy na nich wykonać. Abstrakcja iteracji pozwala nam na czytelny zapis naszych intencji.
 
 Czasem celem iteracji nie jest użycie elementów tablicy do wykonania jakiegoś zadania, a ich transformacja.
 
-let myArray = [1, 2, 3, 4, 5]
-for (let i = 0; i < myArray.length; i++) {
-  myArray[i] = myArray[i] * 5
-}
+=== 11 ===
 
 Ten kod ma ten sam problem co nasz początkowy przykład. Ma za dużo obowiązków. Na ratunek przychodzi funkcja map.
 
-let myArray = [1, 2, 3, 4, 5]
-myArray = myArray.map(x => x * 5)
-
-Możemy jeszcze uprościć ten przykład
-
-const myArray = [1, 2, 3, 4, 5].map(x => x * 5)
+=== 12 ===
 
 Wydawałoby się więc, że użycie prostych, wbudowanych konstrukcji języka takich jak forEach czy map rozwiązuje problem całkowicie. Czasem jednak napotykamy problemy nieco bardziej złożone niż te dostępne w metodach obiektów Array.
 
 Powstały więc biblioteki, które zapewniają znacznie większy arsenał małych funkcji do manipulacji danymi. Dwie główne, prezentujące odmienne podejście do problemu biblioteki to:
 
+=== 13 ===
+
 Lodash oraz Ramda.
 
-Korzystając z Lodasha zapisujemy nasze działania sekwencyjnie:
+=== 14 ===
 
-let myArray = [1, 2, 3, 4, 5]
-myArray = _.map(myArray, x => x * 5)
-_.forEach(myArray, doSomething)
+Korzystając z Lodasha zapisujemy nasze działania sekwencyjnie, w podobny sposób do tego jak korzystaliśmy z funkcji wbudowanych.
 
-Korzystając z Ramdy nasze działania to funkcje składające się z mniejszych funkcji:
+=== 15 ===
 
-const multiplyBy5AndDoSomething = R.compose(
-  R.forEach(doSomething),
-  R.map(x => x * 5)
-)
-
-let myArray = [1, 2, 3, 4, 5]
-multiplyBy5AndDoSomething(myArray)
+Korzystając z Ramdy nasze działania to funkcje składające się z mniejszych funkcji.
 
 Oczywiście nic nie stoi na przeszkodzie aby korzystać z Lodasha w sposób funkcyjny a z Ramdy w sposób imperatywny.
 
@@ -120,170 +89,132 @@ Ale!
 
 Co jeśli nie chcemy iterować po strukturach danych. Jeśli chcemy po prostu powtórzyć jakieś działania kilka razy? A może chemy iterować po ogromnych, bądź nieskończonych zbiorach?
 
-W tym momencie zawodzą nas wcześniejsze podejścia (* funkcyjne nie jeśli mamy tail-call optimisation). Na szczęście JavaScript otrzymał w ES2015 specyfikację i implementację protokołu iteracji, który otwiera nowe możliwości.
+W tym momencie zawodzą nas wcześniejsze podejścia.
+
+Na szczęście JavaScript otrzymał w ES2015 specyfikację i implementację protokołu iteracji, który otwiera nowe możliwości.
+
+=== 16 ===
 
 Byłem kiedyś na prezentacji pokazującej najciekawsze rzeczy dodane w ES2015. Usłyszałem wtedy takie stwierdzenie:
+
+=== 17 ===
 
 "Oprócz wszystkiego, twórcy JavaScript dodali również generatory. Raczej niepotrzebnie, bo nie widzę dla nich żadnego zastosowania"
 
 Nic bardziej mylnego. Zobaczmy co to takiego są te generatory, jak ich używać, jak je pisać i wreszcie co dobrego z nich wynika.
 
-Rozpatrzmy jeszcze raz kod z początku prezentacji.
+=== 18 ===
 
-let myArray = [1, 2, 3, 4, 5]
-for (let i = 0; i < myArray.length; i++) {
-  doSomething(myArray[i])
-}
+Rozpatrzmy jeszcze raz kod z początku prezentacji.
 
 Pokażę wam jeszcze jeden sposób zapisania tego samego:
 
-let myArray = [1, 2, 3, 4, 5]
-for (let item of myArray) {
-  doSomething(item)
-}
+=== 19 ===
 
-Może nie widać tego od razu ale ten kod unika pewnego problemu, którego tak bardzo chcieliśmy uniknąć wcześniej. Otórz nie zajmuje się on w ogóle konstrukcją pętli. Nie interesują go indeksy i inkrementacja. Jest tylko deklaracja "zrób coś dla każdego elementu tablicy". Ostatecznie osiągamy taki sam podział odpowiedzialności jak w przypadku innych rozwiązań: nasz kod mówi jedynie co chcemy zrobić, o to jak to osiągnąć dbają inne elementy (w tym przypadku konstrukcja for..of).
+Może nie widać tego od razu ale ten kod unika pewnego problemu, którego tak bardzo chcieliśmy uniknąć wcześniej. Otórz nie zajmuje się on w ogóle konstrukcją pętli. Nie interesują go indeksy i inkrementacja. Jest tylko deklaracja "zrób coś dla każdego elementu tablicy".
+
+Ostatecznie osiągamy taki sam podział odpowiedzialności jak w przypadku innych rozwiązań: nasz kod mówi jedynie co chcemy zrobić, o to jak to osiągnąć dbają inne elementy (w tym przypadku konstrukcja for..of).
 
 Warto wiedzieć, że for..of nie korzysta w ogóle z indeksów tablicy! Obiekty Array implementują protokół iteracji (iterable protocol). Oznacza to, że posiadają metodę @@iterator (Symbol.iterator), która zwraca iterator - obiekt pozwalający uzyskać dostęp do kolejnych elementów sekwencji.
 
 Zobaczmy jak wykorzystać ten mechanizm "ręcznie", bez użycia for..of
 
-let a = [1, 2, 3]
-let iterator = a[Symbol.iterator]()
-iterator.next() // {value: 1, done: false}
-iterator.next() // {value: 2, done: false}
-iterator.next() // {value: 3, done: false}
-iterator.next() // {value: undefined, done: true}
+=== 20 ===
 
 Jak widzimy, nasz iterator zwraca obiekty posiadające wartość oraz flagę która mówi o tym, czy sekwencja się zakończyła. Zobaczmy w jaki sposób możemy stworzyć własny iterator.
+
+=== 21 ===
 
 Używając generatorów.
 
 Generatory działają podobnie do zwykłych funkcji ale ich wykonanie może zostać przerwane. Aby tego dokonać używane jest słowo kluczowe yield.
 
-function * generate123 () {
-  yield 1
-  yield 2
-  yield 3
-}
+Jak zapewne zauważyliście wynik działania naszego kodu jest identyczny jak w przypadku użycia tablicy.
 
-let iterator = generate123()
-iterator.next() // {value: 1, done: false}
-iterator.next() // {value: 2, done: false}
-iterator.next() // {value: 3, done: false}
-iterator.next() // {value: undefined, done: true}
+Spróbujmy to wykorzystać na naszą korzyść i napiszmy bardziej zaawansowany generator.
 
-Jak zapewne zauważyliście wynik działania naszego kodu jest identyczny jak w przypadku użycia tablicy. Napiszmy więc bardziej zaawansowany generator.
-
-function * range (limit) {
-  for (let i = 0; i < limit; i++) {
-    yield i
-  }
-}
+=== 22 ===
 
 Nasz nowy generator tworzy iterator dla sekwencji liczb całkowitych ograniczonej argumentem.
 
-for (let i of range(3)) {
-  console.log(i) // prints: 0, 1, 2
-}
+=== 23 ===
 
 W tym momencie możecie się zastanawiać po co tyle zachodu aby osiągnąć to samo co mogliśmy osiągnąć używając tablicy. Ale to wcale nie jest to samo. Nasza funkcja może pobierać dowolnie duży limit, a iterator będzie zajmował dokładnie tyle samo pamięci.
 
-for (let i of range(Infinity)) {
-  console.log(i) // prints: 0, 1, 2, 3, 4, ...
-}
+=== 24 ===
 
-Na tym jednak nie kończą się niespodzianki. Używając generatorów możemy transformować dowolne sekwencje w inne. Najprostszym przykładem będzie funkcja map napisana z użyciem generatorów.
+Tym samym otrzymujemy możliwość konstruowania nieskończonych zbiorów danych.
 
-function * map (iterable, fn) {
-  for (let item of iterable) {
-    yield fn(item)
-  }
-}
+Na tym jednak nie kończą się niespodzianki. Używając generatorów możemy transformować dowolne sekwencje w inne.
 
-Tym sposobem możemy uzyskać bardzo interesujące rezultaty. Załóżmy, że chcemy uzyskać sekwencję wszyskich potęg liczby 2. Oczywiście można to uzyskać w taki sposób:
+Najprostszym przykładem będzie funkcja map napisana z użyciem generatorów.
 
-function getPowers (count) {
-  let powers = []
-  for (let i = 0; i < count; i++) {
-    powers.push(2 ** i)
-  }
-  return powers
-}
+=== 25 ===
+
+Widzimy, że ta pięciolinijkowa funkcja daje nam ogromne możliwości. Spójrzmy, jak je wykorzystać w praktyce.
+
+Załóżmy, że chcemy uzyskać sekwencję wszyskich potęg liczby 2. Oczywiście można to uzyskać w taki sposób:
+
+=== 26 ===
 
 Ale to rozwiązanie zakłada, że wiemy z góry ile elementów będzie nam potrzebne. Musimy też zaalokować na nie pamięć. Spójrzmy więc na implementację z użyciem napisanych przez nas prostych funkcji:
 
-const powersIterator = map(range(Infinity), x => 2 ** x)
-for (let power of powersIterator) {
-  console.log(power) // prints: 1, 2, 4, 8, 16, ...
-}
+=== 27 ===
 
-W tym momencie widzimy już, że zbudowaliśmy narzędzie, którego nie zapewniają nam biblioteki takie jak Lodash czy Ramda. Ale do szczęścia brakuje nam możliwości wielokrotnego użycia.
+W tym momencie widzimy już, że zbudowaliśmy narzędzie, którego nie zapewniają nam biblioteki takie jak Lodash czy Ramda.
 
-const rangeIterator = range(3)
+Oczywiście, ponieważ jest to narzędzie, nie jest ono ani lepsze ani gorsze od innych, ponieważ ma inne zastosowania, podobnie jak młotek nie jest lepszy ani gorszy od śrubokrętu.
 
-for (let i of rangeIterator) {
-  console.log(i) // prints: 0, 1, 2
-}
+Protokół iteracji pozwala nam korzystać z sekwencji danych, niezależnie od tego w jaki sposób zostały one utworzone. Bez problemu możemy dzięki niemu iterować po obiektach takich jak pojedynczo łączone listy albo zbiory, ale nie możemy tworzyć nowych instancji tych struktur danych.
 
-for (let i of rangeIterator) {
-  console.log(i) // never executed
-}
+Funkcja map działająca na iteratorach zwraca iterator, a nie tablicę czy listę. Podobnie zresztą jak funkcja range.
+
+Wróćmy do niej na chwilę.
+
+=== 28 ===
+
+Warto zauważyć, że wywołanie funkcji range nie powoduje żadnych obliczeń. Dopiero jej użycie wymusza obliczenie kolejnych elementów generowanej sekwencji.
+
+Ta funkcja ma jednak pewien problem, i tutaj pytanie do publiczności, czy ktoś może już go widzi? Podpowiem, że problem jest w wartości zwracanej przez funkcję.
+
+=== 29 ===
+
+Tak! Możemy tej wartości użyć tylko raz.
 
 Dzieje się tak ponieważ iteratory są obiektami jednorazowego użytku. Pozwalają tylko na jednorazowe przejście po sekwencji elementów. Wiemy jednak, że po tablicy możemy iterować wielokrotnie. Nie jest ona iteratorem a obiektem, który implementuje protokół iteracji (ang. iterable).
 
-Funkcja range, podejście drugie:
+Aby temu zapobiec możemy zamiast iteratora zwracać obiekt, który implementuje protokół iteracji.
 
-function range (limit) {
-  let iterable = {}
-  iterable[Symbol.iterator] = function * () {
-    for (let i = 0; i < limit; i++) {
-      yield i
-    }
-  }
-  return iterable
-}
+=== 30 ===
 
-Możemy to uprościć w zapisie:
+Umieszczając generator pod kluczem Symbol.iterator w naszym obiekcie uzyskujemy możliwość wielokrotnej iteracji po nim.
 
-function range (limit) {
-  return {
-    *[Symbol.iterator] () {
-      for (let i = 0; i < limit; i++) {
-        yield i
-      }
-    }
-  }
-}
+Możemy to też uprościć w zapisie:
 
-Spróbujmy wykorzystać naszą funkcję teraz:
+=== 31 ===
 
-const rangeIterable = range(3)
+Możemy sobie pogratulować. Osiągneliśmy sukces.
 
-for (let i of rangeIterable) {
-  console.log(i) // prints: 0, 1, 2
-}
+Pozostało tylko usiąść do własnych projektów i zaimplementować takie proste i użyteczne funkcje na generatorach.
 
-for (let i of rangeIterable) {
-  console.log(i) // prints: 0, 1, 2
-}
+=== 32 ===
 
-Sukces! Udało się, pozostało tylko usiąść do własnych projektów i zaimplementować takie proste i użyteczne funkcje na generatorach.
-
-Albo dołączyć zestaw takich funkcji z istniejącej biblioteki. W wolnym czasie napisałem właśnie taką prostą bibliotekę, która usprawnia pracę z iteratorami.
-
-https://github.com/sz-piotr/iterable-sequence
+Albo dołączyć zestaw takich funkcji z istniejącej biblioteki. W wolnym czasie napisałem właśnie taką prostą bibliotekę, która usprawnia pracę z iteratorami i generatorami.
 
 Oprócz omówionych podczas tej prezentacji funkcji takich jak range, forEach, map zawiera ona znany z pythona zip jak również uznawane za podstawę programowania funkcyjnego w JavaScript filter, reduce i wiele innych.
 
-Na koniec spójrzmy na przykład korzystania z tej biblioteki, odpowiadający tym, które dzisiaj omówiliśmy.
+=== 33 ===
 
-import { range } from 'iterable-sequence'
+Spójrzmy na przykład korzystania z tej biblioteki, odpowiadający tym, które dzisiaj omówiliśmy.
 
-let powers = range(Infinity).map(x => 2 ** x)
+W tym przykładzie sekwencja którą tworzymy jest nieskończona, a konsument decyduje użyć tylko pięciu pierwszych elementów.
 
-for (let power of powers.take(5)) {
-  console.log(power) // prints: 1, 2, 4, 8, 16
-}
+=== 34 ===
 
-Bardzo dziękuję za uwagę i czekam na pytania.
+Na koniec nieco bardziej zaawansowany przykład Wykorzystujący dwie funkcje zawarte w bibliotece: zip oraz repeat, oraz funkcję range o rozszerzonej funkcjonalności.
+
+W tym przykładzie range tworzy malejącą sekwencję liczb parzystych, repeat sekwencję abababab, a zip łączy je w jedną sekwencję par wartości.
+
+=== 35 ===
+
+Bardzo dziękuję za uwagę i zapraszam do korzystania z mojej biblioteki.
