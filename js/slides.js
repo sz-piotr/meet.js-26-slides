@@ -16,6 +16,24 @@ Slide.prototype.show = function() {
   })
 }
 
+Slide.prototype.forward = function() {
+  if(this.next) {
+    this.hide()
+    this.next.show()
+    return this.next
+  }
+  return this
+}
+
+Slide.prototype.back = function() {
+  if(this.prev) {
+    this.hide()
+    this.prev.show()
+    return this.prev
+  }
+  return this
+}
+
 document.querySelectorAll('pre[data-trim] code')
   .forEach(function (element) {
     var trimmed = element.innerHTML
@@ -65,34 +83,22 @@ for(var i = slideElements.length - 1; i >= 0; i--) {
   }
 }
 
-function next() {
-  if(currentSlide.next) {
-    currentSlide.hide()
-    currentSlide = currentSlide.next
-    currentSlide.show()
-  }
-}
-
-function previous() {
-  if(currentSlide.prev) {
-    currentSlide.hide()
-    currentSlide = currentSlide.prev
-    currentSlide.show()
-  }
-}
-
 currentSlide.show()
+
+for(var i = 0; i < 6; i++) {
+  currentSlide = currentSlide.forward()
+}
 
 document.addEventListener('keydown', function(event) {
   switch(event.keyCode) {
     case 39:
     case 32:
     case 68:
-      next()
+      currentSlide = currentSlide.forward()
       break
     case 37:
     case 65:
-      previous()
+      currentSlide = currentSlide.back()
       break
   }
 })

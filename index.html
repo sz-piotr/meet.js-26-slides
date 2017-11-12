@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,400i,700" rel="stylesheet">
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/theme.css">
@@ -32,7 +33,7 @@ for (let i = 0; i < myArray.length; i++) {
 
 <section>
   <div class="dark full">
-    <pre data-trim><code class="language-javascript">
+    <pre data-trim><code class="language-c">
 int myArray[] = { 1, 2, 3, 4, 5 };
 int length = sizeof(myArray) / sizeof(int);
 
@@ -170,11 +171,11 @@ myArray = myArray.map(x => x * 5)
 
 <section>
   <div class="dark-header">
-    <img src="lodash_logo.png">
+    <img src="img/lodash_logo.png">
   </div>
 
   <div class="light-header">
-    <img src="ramda_logo.png">
+    <img src="img/ramda_logo.png">
   </div>
 
   <div class="dark">
@@ -311,7 +312,11 @@ function getPowers (count) {
   </div>
   <div class="light">
     <pre data-trim data-enter=1><code class="language-javascript">
-const powersIterator = map(range(Infinity), x => 2 ** x)
+const powersIterator = map(
+  range(Infinity),
+  x => 2 ** x
+)
+
 for (let power of powersIterator) {
   console.log(power) // prints: 1, 2, 4, 8, 16, ...
 }
