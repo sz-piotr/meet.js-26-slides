@@ -1,6 +1,6 @@
 === 0 ===
 
-Cześć, nazywam się Piotr Szlachciak i dzisiaj przedstawię prezentację zatutułowaną "W kółko to samo, czyli o iteracji słów kilka".
+Cześć, nazywam się Piotr Szlachciak i dzisiaj przedstawię prezentację zatytułowaną "W kółko to samo, czyli o iteracji słów kilka".
 
 === 1 ===
 
@@ -28,16 +28,13 @@ Podstawowym problemem tego kodu jest to że powinien robić jedną rzecz, a robi
 
 === 4 ===
 
-Poza wywołaniem funckji dla każdego elementu tablicy równocześnie zajmuje się kontrolą pętli. Aby ten problem naprawić możemy zrobić refactoring i wydzielić kontrolowanie pętli do osobnej funkcji.
+Poza wywołaniem funkcji dla każdego elementu tablicy równocześnie zajmuje się kontrolą pętli. Aby ten problem naprawić możemy zrobić refactoring i wydzielić kontrolowanie pętli do osobnej funkcji.
 
 === 5 ===
 
 A następnie użyć jej do osiągnięcia naszego pierwotnego celu:
 
 === 6 ===
-
-let myArray = [1, 2, 3, 4, 5]
-forEach(myArray, doSomething)
 
 W większości zastosowań nie ma jednak sensu duplikować istniejącej funkcjonalności. Możemy użyć wbudowanej metody forEach obiektów typu Array.
 
@@ -87,7 +84,7 @@ Oczywiście nic nie stoi na przeszkodzie aby korzystać z Lodasha w sposób funk
 
 Ale!
 
-Co jeśli nie chcemy iterować po strukturach danych. Jeśli chcemy po prostu powtórzyć jakieś działania kilka razy? A może chemy iterować po ogromnych, bądź nieskończonych zbiorach?
+Co jeśli nie chcemy iterować po strukturach danych. Jeśli chcemy po prostu powtórzyć jakieś działania kilka razy? A może chcemy iterować po ogromnych, bądź nieskończonych zbiorach?
 
 W tym momencie zawodzą nas wcześniejsze podejścia.
 
@@ -111,7 +108,7 @@ Pokażę wam jeszcze jeden sposób zapisania tego samego:
 
 === 19 ===
 
-Może nie widać tego od razu ale ten kod unika pewnego problemu, którego tak bardzo chcieliśmy uniknąć wcześniej. Otórz nie zajmuje się on w ogóle konstrukcją pętli. Nie interesują go indeksy i inkrementacja. Jest tylko deklaracja "zrób coś dla każdego elementu tablicy".
+Może nie widać tego od razu ale ten kod unika pewnego problemu, którego tak bardzo chcieliśmy uniknąć wcześniej. Otóż nie zajmuje się on w ogóle konstrukcją pętli. Nie interesują go indeksy i inkrementacja. Jest tylko deklaracja "zrób coś dla każdego elementu tablicy".
 
 Ostatecznie osiągamy taki sam podział odpowiedzialności jak w przypadku innych rozwiązań: nasz kod mówi jedynie co chcemy zrobić, o to jak to osiągnąć dbają inne elementy (w tym przypadku konstrukcja for..of).
 
@@ -153,7 +150,7 @@ Najprostszym przykładem będzie funkcja map napisana z użyciem generatorów.
 
 Widzimy, że ta pięciolinijkowa funkcja daje nam ogromne możliwości. Spójrzmy, jak je wykorzystać w praktyce.
 
-Załóżmy, że chcemy uzyskać sekwencję wszyskich potęg liczby 2. Oczywiście można to uzyskać w taki sposób:
+Załóżmy, że chcemy uzyskać sekwencję wszystkich potęg liczby 2. Oczywiście można to uzyskać w taki sposób:
 
 === 26 ===
 
@@ -193,7 +190,7 @@ Możemy to też uprościć w zapisie:
 
 === 31 ===
 
-Możemy sobie pogratulować. Osiągneliśmy sukces.
+Możemy sobie pogratulować. Osiągnęliśmy sukces.
 
 Pozostało tylko usiąść do własnych projektów i zaimplementować takie proste i użyteczne funkcje na generatorach.
 
