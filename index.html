@@ -204,6 +204,12 @@ composed(myArray)
 </section>
 
 <section>
+  <div class="light full">
+    <h1>Generatory</h1>
+  </div>
+</section>
+
+<section>
   <div class="dark full">
     "Oprócz wszystkiego, twórcy JavaScript dodali również generatory.
     Raczej niepotrzebnie, bo nie widzę dla nich żadnego zastosowania"
@@ -239,7 +245,18 @@ for (let item of myArray) {
 </section>
 
 <section>
-  <div class="dark">
+  <div class="dark full" data-exit=1>
+    <pre data-trim><code class="language-javascript">
+let a = [1, 2, 3]
+
+let iterator = a[Symbol.iterator]()
+iterator.next() // {value: 1, done: false}
+iterator.next() // {value: 2, done: false}
+iterator.next() // {value: 3, done: false}
+iterator.next() // {value: undefined, done: true}
+    </code></pre>
+  </div>
+  <div class="dark" data-enter=1>
     <pre data-trim><code class="language-javascript">
 let a = [1, 2, 3]
 
@@ -251,7 +268,7 @@ iterator.next() // {value: undefined, done: true}
     </code></pre>
   </div>
 
-  <div class="light">
+  <div class="light" data-enter=1>
     <pre data-trim data-enter=1><code class="language-javascript">
 function * generate123 () {
   yield 1
@@ -269,7 +286,7 @@ iterator.next() // {value: undefined, done: true}
 </section>
 
 <section>
-  <div class="dark">
+  <div class="dark full">
     <pre data-trim><code class="language-javascript">
 function * range (limit) {
   for (let i = 0; i < limit; i++) {
@@ -278,11 +295,13 @@ function * range (limit) {
 }
     </code></pre>
     <pre data-trim data-enter=1 data-exit=2><code class="language-javascript">
+
 for (let i of range(3)) {
   console.log(i) // prints: 0, 1, 2
 }
     </code></pre>
     <pre data-trim data-enter=2><code class="language-javascript">
+
 for (let i of range(Infinity)) {
   console.log(i) // prints: 0, 1, 2, 3, 4, ...
 }
@@ -291,7 +310,7 @@ for (let i of range(Infinity)) {
 </section>
 
 <section>
-  <div class="dark">
+  <div class="dark full">
     <pre data-trim><code class="language-javascript">
 function * map (iterable, fn) {
   for (let item of iterable) {
@@ -303,7 +322,7 @@ function * map (iterable, fn) {
 </section>
 
 <section>
-  <div class="dark">
+  <div class="dark full" data-exit=1>
     <pre data-trim><code class="language-javascript">
 function getPowers (count) {
   let powers = []
@@ -314,8 +333,20 @@ function getPowers (count) {
 }
     </code></pre>
   </div>
-  <div class="light">
-    <pre data-trim data-enter=1><code class="language-javascript">
+  <div class="dark" data-enter=1>
+    <pre data-trim><code class="language-javascript">
+function getPowers (count) {
+  let powers = []
+  for (let i = 0; i < count; i++) {
+    powers.push(2 ** i)
+  }
+  return powers
+}
+    </code></pre>
+  </div>
+
+  <div class="light" data-enter=1>
+    <pre data-trim><code class="language-javascript">
 const powersIterator = map(
   range(Infinity),
   x => 2 ** x
@@ -329,7 +360,7 @@ for (let power of powersIterator) {
 </section>
 
 <section>
-  <div class="dark">
+  <div class="dark full" data-exit=1>
     <pre data-trim><code class="language-javascript">
 function * range (limit) {
   for (let i = 0; i < limit; i++) {
@@ -338,8 +369,17 @@ function * range (limit) {
 }
     </code></pre>
   </div>
-  <div class="light">
-    <pre data-trim data-enter=1><code class="language-javascript">
+  <div class="dark" data-enter=1>
+    <pre data-trim><code class="language-javascript">
+function * range (limit) {
+  for (let i = 0; i < limit; i++) {
+    yield i
+  }
+}
+    </code></pre>
+  </div>
+  <div class="light" data-enter=1>
+    <pre data-trim><code class="language-javascript">
 let rangeIterator = range(3)
 
 for (let i of rangeIterator) {
@@ -355,7 +395,7 @@ for (let i of rangeIterator) {
 
 <section>
   <div class="dark">
-    <pre data-trim data-exit=2><code class="language-javascript">
+    <pre data-trim data-exit=1><code class="language-javascript">
 function range (limit) {
   let iterable = {}
   iterable[Symbol.iterator] = function * () {
@@ -366,7 +406,7 @@ function range (limit) {
   return iterable
 }
     </code></pre>
-    <pre data-trim data-enter=2><code class="language-javascript">
+    <pre data-trim data-enter=1><code class="language-javascript">
 const range = limit => ({
   *[Symbol.iterator] () {
     for (let i = 0; i < limit; i++) {
@@ -377,7 +417,7 @@ const range = limit => ({
     </code></pre>
   </div>
   <div class="light">
-    <pre data-trim data-enter=1><code class="language-javascript">
+    <pre data-trim><code class="language-javascript">
 let rangeIterable = range(3)
 
 for (let i of rangeIterable) {
@@ -392,7 +432,14 @@ for (let i of rangeIterable) {
 </section>
 
 <section>
-  <div class="dark">
+  <div class="light full">
+    <h1>Iterable Sequence</h1>
+    (moja biblioteka)
+  </div>
+</section>
+
+<section>
+  <div class="light full">
     <pre data-trim><code class="language-javascript">
 import { range } from 'iterable-sequence'
 
@@ -406,8 +453,37 @@ for (let power of powers.take(5)) {
 </section>
 
 <section>
+  <div class="light full">
+    <pre data-trim><code class="language-javascript">
+import { range, zip, repeat } from 'iterable-sequence'
+
+const zipped = zip(
+  range(10, 0, -2)
+  repeat('ab')
+)
+
+for(const [a, b] of zipped) {
+  console.log(`first: ${a}, second: ${b}`)
+  /* Output:
+    first: 10, second: a
+    first: 8, second: b
+    first: 6, second: a
+    first: 4, second: b
+    first: 2, second: a
+  */
+}
+    </code></pre>
+  </div>
+</section>
+
+<section>
   <div class="dark full">
-    Dziękuję za uwagę
+    Dziękuję za uwagę<br>
+    i zapraszam do korzystania z mojej biblioteki: <br>
+    <br>
+    <a href="https://www.npmjs.com/package/iterable-sequence">
+      npmjs.com/package/iterable-sequence
+    </a>
   </div>
 </section>
 

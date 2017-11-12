@@ -16,7 +16,6 @@ html {
 
 body {
   overflow: auto;
-  background-color: #002b36;
 }
 
 section {
@@ -53,9 +52,12 @@ code {
   top: 0;
 }
 
-.full {
-  left: 25%;
-  right: 25%;
+.dark.full,
+.light.full {
+  left: 0;
+  right: 0;
+  width: 100%;
+  padding: 2rem calc(25% + 2rem);
 }
 
 .dark-header,
@@ -78,4 +80,12 @@ code {
 .dark-header img,
 .light-header img {
   height: 10vw;
+}
+
+.progress {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: .2rem;
+  z-index: 1000;
 }

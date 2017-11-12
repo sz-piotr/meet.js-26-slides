@@ -17,6 +17,11 @@
   --green:   #859900; /* green */
 }
 
+a {
+  font-family: 'Ubuntu Mono', monospace;
+  color: #268bd2; /* blue */
+}
+
 .token.function {
   color: #268bd2; /* blue */
   font-style: italic;
@@ -28,6 +33,14 @@
 
 .token.number {
   color: #d33682; /* magenta */
+}
+
+.token.string {
+  color: #b58900; /* yellow */
+}
+
+.token.interpolation .token.interpolation-punctuation.punctuation {
+  color: #dc322f; /* red */
 }
 
 /* DARK THEME */

@@ -1,15 +1,21 @@
 var presentation = {
   slides: [],
   currentIndex: 0,
-  hide() {
+  progress: document.querySelector('.progress'),
+  hide: function () {
     this.slides[this.currentIndex].forEach(function(element) {
       element.style.display = 'none'
     })
   },
-  show() {
+  show: function() {
     this.slides[this.currentIndex].forEach(function(element) {
       element.style.removeProperty('display')
     })
+    location.hash = this.currentIndex
+  },
+  start: function() {
+    this.currentIndex = parseInt(location.hash.substring(1)) || 0
+    this.show()
   },
   next: function() {
     if(this.currentIndex < this.slides.length - 1) {
@@ -57,7 +63,7 @@ document.querySelectorAll('section').forEach(function (slide) {
   presentation.slides = presentation.slides.concat(timeline)
 })
 
-presentation.show()
+presentation.start()
 
 document.addEventListener('keydown', function(event) {
   switch(event.keyCode) {
