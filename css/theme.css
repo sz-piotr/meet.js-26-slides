@@ -47,7 +47,7 @@ a {
 
 .dark {
   background-color: #002b36; /* base03 */
-  color: #839496; /* base0 */
+  color: #b2bebe; /* lighter than base1 */
 }
 
 .dark h1 {
@@ -55,16 +55,16 @@ a {
 }
 
 .dark .token.keyword {
-  color: #93a1a1; /* base1 */
-  font-weight: bold;
+  color: #eee8d5; /* base2 */
+  /* font-weight: bold; */
 }
 
 .dark .token.punctuation {
-  color: #657b83; /* base00 */
+  color: #839496; /* base0 */
 }
 
 .dark .token.comment {
-  color: #586e75; /* base01 */
+  color: #657b83; /* base00 */
 }
 
 /* LIGHT THEME */
