@@ -37,6 +37,10 @@
   color: #839496; /* base0 */
 }
 
+.dark h1 {
+  color: #fdf6e3;
+}
+
 .dark .token.keyword {
   color: #93a1a1; /* base1 */
   font-weight: bold;

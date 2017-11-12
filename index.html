@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,400i,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Courgette&amp;subset=latin-ext" rel="stylesheet">
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/theme.css">
@@ -15,7 +16,10 @@
 
 <section>
   <div class="dark full">
-    W kółko to samo, czyli o iteracji słów kilka <br>
+    <h1>
+      W kółko to samo, <br>
+      czyli o iteracji słów kilka
+    </h1>
     Piotr Szlachciak
   </div>
 </section>
@@ -318,7 +322,7 @@ const powersIterator = map(
 )
 
 for (let power of powersIterator) {
-  console.log(power) // prints: 1, 2, 4, 8, 16, ...
+  console.log(power) // prints: 1, 2, 4, 8, ...
 }
     </code></pre>
   </div>
@@ -363,26 +367,24 @@ function range (limit) {
 }
     </code></pre>
     <pre data-trim data-enter=2><code class="language-javascript">
-function range (limit) {
-  return {
-    *[Symbol.iterator] () {
-      for (let i = 0; i < limit; i++) {
-        yield i
-      }
+const range = limit => ({
+  *[Symbol.iterator] () {
+    for (let i = 0; i < limit; i++) {
+      yield i
     }
   }
-}
+})
     </code></pre>
   </div>
   <div class="light">
     <pre data-trim data-enter=1><code class="language-javascript">
-let rangeIterator = range(3)
+let rangeIterable = range(3)
 
-for (let i of rangeIterator) {
+for (let i of rangeIterable) {
   console.log(i) // prints: 0, 1, 2
 }
 
-for (let i of rangeIterator) {
+for (let i of rangeIterable) {
   console.log(i) // prints: 0, 1, 2
 }
     </code></pre>
@@ -403,8 +405,13 @@ for (let power of powers.take(5)) {
   </div>
 </section>
 
-<section>Dziękuję za uwagę</section>
+<section>
+  <div class="dark full">
+    Dziękuję za uwagę
+  </div>
+</section>
 
+<script src="js/trim.js"></script>
 <script src="js/prism.js"></script>
 <script src="js/slides.js"></script>
 
