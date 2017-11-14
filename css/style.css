@@ -89,3 +89,7 @@ code {
   height: .2rem;
   z-index: 1000;
 }
+
+section[data-skip] {
+  display: none !important;
+}

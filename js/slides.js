@@ -33,7 +33,7 @@ var presentation = {
   }
 }
 
-document.querySelectorAll('section').forEach(function (slide) {
+document.querySelectorAll('section:not([data-skip])').forEach(function (slide) {
   slide.style.display = 'none'
 
   var fragments = slide.querySelectorAll('[data-enter], [data-exit]')
