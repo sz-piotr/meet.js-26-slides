@@ -1,7 +1,6 @@
 var presentation = {
   slides: [],
   currentIndex: 0,
-  progress: document.querySelector('.progress'),
   hide: function () {
     this.slides[this.currentIndex].forEach(function(element) {
       element.style.display = 'none'

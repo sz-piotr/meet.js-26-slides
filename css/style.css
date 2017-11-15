@@ -29,6 +29,7 @@ pre {
 
 code {
   font-family: 'Ubuntu Mono', monospace;
+  line-height: 1;
 }
 
 .dark,

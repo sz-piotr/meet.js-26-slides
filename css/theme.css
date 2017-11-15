@@ -43,6 +43,10 @@ a {
   color: #dc322f; /* red */
 }
 
+.token.class-name {
+  color: #859900; /* green */
+}
+
 /* DARK THEME */
 
 .dark {

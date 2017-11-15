@@ -17,7 +17,7 @@
   <div class="dark full">
     <h1>
       W kółko to samo, czyli<br>
-      o iteracji w JS słów kilka
+      o iteracji słów kilka
     </h1>
     Piotr Szlachciak
   </div>
@@ -137,8 +137,8 @@ function forEach (array, action) {
     </code></pre>
     <pre data-trim data-enter=2><code class="language-javascript">
 function forEach ([first, ...rest], action) {
-  if (first !== undefined) {
-    action(first)
+  action(first)
+  if (rest.length > 0) {
     forEach(rest, action)
   }
 }
@@ -351,6 +351,7 @@ const powersIterator = map(
   x => 2 ** x
 )
 
+// lazy evaluation
 for (let power of powersIterator) {
   console.log(power) // prints: 1, 2, 4, 8, ...
 }
@@ -394,25 +395,16 @@ for (let i of rangeIterator) {
 
 <section>
   <div class="dark">
-    <pre data-trim data-exit=1><code class="language-javascript">
+    <pre data-trim><code class="language-javascript">
 function range (limit) {
-  let iterable = {}
-  iterable[Symbol.iterator] = function * () {
-    for (let i = 0; i < limit; i++) {
-      yield i
+  return {
+    *[Symbol.iterator]() {
+      for (let i = 0; i < limit; i++) {
+        yield i
+      }
     }
   }
-  return iterable
 }
-    </code></pre>
-    <pre data-trim data-enter=1><code class="language-javascript">
-const range = limit => ({
-  *[Symbol.iterator] () {
-    for (let i = 0; i < limit; i++) {
-      yield i
-    }
-  }
-})
     </code></pre>
   </div>
   <div class="light">
@@ -430,14 +422,171 @@ for (let i of rangeIterable) {
   </div>
 </section>
 
-<section data-skip>
+<section>
+  <div class="dark">
+    <pre data-trim><code class="language-javascript">
+function map (iterable, fn) {
+  return {
+    *[Symbol.iterator]() {
+      for (let item of iterable) {
+        yield fn(item)
+      }
+    }
+  }
+}
+    </code></pre>
+  </div>
+  <div class="light">
+    <pre data-trim><code class="language-javascript">
+let powersIterable = map(
+  range(3),
+  x => 2 ** x
+)
+
+for (let i of powersIterable) {
+  console.log(i) // prints: 1, 2, 4
+}
+
+for (let i of powersIterable) {
+  console.log(i) // prints: 1, 2, 4
+}
+    </code></pre>
+  </div>
+</section>
+
+<section>
+  <div class="dark full" data-exit=1>
+    <pre data-trim><code class="language-javascript">
+function forEach ([first, ...rest], action) {
+  action(first)
+  if (rest.length > 0) {
+    forEach(rest, action)
+  }
+}
+    </code></pre>
+  </div>
+  <div class="dark" data-enter=1 data-exit=3>
+    <pre data-trim><code class="language-javascript">
+function forEach ([first, ...rest], action) {
+  action(first)
+  if (rest.length > 0) {
+    forEach(rest, action)
+  }
+}
+    </code></pre>
+  </div>
+  <div class="dark" data-enter=3>
+    <pre data-trim><code class="language-javascript">
+function forEach ({ first, rest }, action) {
+  action(first)
+  if (rest) {
+    forEach(rest, action)
+  }
+}
+    </code></pre>
+  </div>
+
+  <div class="light" data-enter=1>
+    <pre data-trim data-exit=2><code class="language-javascript">
+1 -> 2 -> 3
+    </code></pre>
+    <pre data-trim data-enter=2 data-exit=4><code class="language-javascript">
+let list = {
+  fist: 1,
+  rest: {
+    first: 2,
+    rest: {
+      first: 3
+    }
+  }
+}
+    </code></pre>
+    <pre data-trim data-enter=4><code class="language-javascript">
+class List {
+  constructor(first, rest) {
+    this.first = first
+    this.rest = rest
+  }
+}
+    </code></pre>
+  </div>
+</section>
+
+<section>
+  <div class="light full">
+    <pre data-trim><code class="language-javascript">
+class List {
+  constructor(first, rest) {
+    this.first = first
+    this.rest = rest
+  }
+
+  *[Symbol.iterator]() {
+    let node = this
+    while(node) {
+      yield node.first
+      node = node.rest
+    }
+  }
+}
+    </code></pre>
+  </div>
+</section>
+
+<section>
+  <div class="dark">
+    <pre data-trim><code class="language-javascript">
+class List {
+  constructor(first, rest) {
+    this.first = first
+    this.rest = rest
+  }
+
+  *[Symbol.iterator]() {
+    let node = this
+    while(node) {
+      yield node.first
+      node = node.rest
+    }
+  }
+}
+    </code></pre>
+  </div>
+  <div class="light">
+    <pre data-trim><code class="language-javascript">
+let codes = new List(105,
+  new List(9829,
+    new List(117)
+  )
+)
+    </code></pre>
+    <pre data-trim data-enter=1 data-exit=2><code class="language-javascript">
+
+for(let code of codes) {
+  console.log(code) // output: 105 9829 117
+}
+    </code></pre>
+    <pre data-trim data-enter=2><code class="language-javascript">
+
+let message = map(codes, String.fromCharCode)
+    </code></pre>
+    <pre data-trim data-enter=3><code class="language-javascript">
+
+for(let char of message) {
+  console.log(char) // output: i ♥ u
+}
+    </code></pre>
+  </div>
+</section>
+
+<section>
   <div class="light full">
     <h1>Iterable Sequence</h1>
     (moja biblioteka)
   </div>
 </section>
 
-<section data-skip>
+<section>
   <div class="light full">
     <pre data-trim><code class="language-javascript">
 import { range } from 'iterable-sequence'
@@ -451,7 +600,7 @@ for (let power of powers.take(5)) {
   </div>
 </section>
 
-<section data-skip>
+<section>
   <div class="light full">
     <pre data-trim><code class="language-javascript">
 import { range, zip, repeat } from 'iterable-sequence'
@@ -471,6 +620,49 @@ for(const [a, b] of zipped) {
     first: 2, second: a
   */
 }
+    </code></pre>
+  </div>
+</section>
+
+<section>
+  <div class="light full">
+    <pre data-trim><code class="language-javascript">
+function * echo () {
+  let value = yield 'Tell me something.'
+  try {
+    yield value
+  } catch(e) {
+    console.log(e.message)
+  }
+}
+    </code></pre>
+    <pre data-trim data-enter=1><code class="language-javascript">
+
+let iterator = echo()
+iterator.next()
+// { value: 'Tell me something.', done: false }
+
+iterator.next('Hi echo')
+// { value: 'Hi echo', done: false }
+
+iterator.throw(new Error('Error Message'))
+// output: 'Error Message'
+    </code></pre>
+  </div>
+</section>
+
+<section>
+  <div class="light full">
+    <pre data-trim><code class="language-javascript">
+async function () {
+  let result = await callSomeApi()
+}
+    </code></pre>
+    <pre data-trim data-enter=1><code class="language-javascript">
+
+const asyncGenerator = makeAsync(function * () {
+  let result = yield callSomeApi()
+})
     </code></pre>
   </div>
 </section>
