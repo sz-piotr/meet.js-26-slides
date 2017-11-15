@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="css/theme.css">
 
   <title>W kółko to samo</title>
+  <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
 </head>
 <body>
 
@@ -613,14 +614,71 @@ const zipped = zip(
 for(const [a, b] of zipped) {
   console.log(`first: ${a}, second: ${b}`)
   /* Output:
-    first: 10, second: a
-    first: 8, second: b
-    first: 6, second: a
-    first: 4, second: b
-    first: 2, second: a
+first: 10, second: a
+first: 8, second: b
+first: 6, second: a
+first: 4, second: b
+first: 2, second: a
   */
 }
     </code></pre>
+  </div>
+</section>
+
+<section>
+  <div class="light full">
+    <pre data-trim data-enter=2 data-exit=3><code class="language-javascript">
+import List from './previous-slides'
+    </code></pre>
+    <pre data-trim><code class="language-javascript">
+import { map } from 'iterable-sequence'
+
+    </code></pre>
+    <pre data-trim data-exit=1><code class="language-javascript">
+let data = [0, 1, 2, 3]
+    </code></pre>
+    <pre data-trim data-enter=1 data-exit=2><code class="language-javascript">
+let data = '0123'
+    </code></pre>
+    <pre data-trim data-enter=2 data-exit=3><code class="language-javascript">
+let data = new List(0,
+  new List(1,
+    new List(2,
+      new List(3)
+    )
+  )
+)
+    </code></pre>
+    <pre data-trim data-enter=3 data-exit=4><code class="language-javascript">
+let data = function * () {
+  yield 0
+  yield 1
+  yield 2
+  yield 3
+}
+    </code></pre>
+    <pre data-trim data-enter=4><code class="language-javascript">
+let data = {
+  0: 0,
+  1: 1,
+  2: 2,
+  3: 3,
+  length: 4
+}
+    </code></pre>
+    <pre data-trim><code class="language-javascript">
+
+let mapped = map(data, x => 2 ** x)
+for(let x of mapped) {
+  console.log(x) // output: 1, 2, 4, 8
+}
+    </code></pre>
+  </div>
+</section>
+
+<section>
+  <div class="dark full">
+    <h1>Bonus</h1>
   </div>
 </section>
 
