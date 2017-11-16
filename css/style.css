@@ -15,7 +15,7 @@ html {
 }
 
 body {
-  overflow: auto;
+  overflow: hidden;
 }
 
 section {
